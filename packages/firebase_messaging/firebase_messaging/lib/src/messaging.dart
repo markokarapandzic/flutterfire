@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -12,13 +14,13 @@ class FirebaseMessaging extends FirebasePluginPlatform {
   // Cached and lazily loaded instance of [FirebaseMessagingPlatform] to avoid
   // creating a [MethodChannelFirebaseMessaging] when not needed or creating an
   // instance with the default app before a user specifies an app.
-  FirebaseMessagingPlatform? _delegatePackingProperty;
+  FirebaseMessagingPlatform _delegatePackingProperty;
 
   static Map<String, FirebaseMessaging> _firebaseMessagingInstances = {};
 
   FirebaseMessagingPlatform get _delegate {
-    return _delegatePackingProperty ??= FirebaseMessagingPlatform.instanceFor(
-        app: app, pluginConstants: pluginConstants);
+    return _delegatePackingProperty == null ? FirebaseMessagingPlatform.instanceFor(
+        app: app, pluginConstants: pluginConstants) : _delegatePackingProperty;
   }
 
   /// The [FirebaseApp] for this current [FirebaseMessaging] instance.
@@ -87,7 +89,7 @@ class FirebaseMessaging extends FirebasePluginPlatform {
   /// This should be used to determine whether specific notification interaction
   /// should open the app with a specific purpose (e.g. opening a chat message,
   /// specific screen etc).
-  Future<RemoteMessage?> getInitialMessage() {
+  Future<RemoteMessage> getInitialMessage() {
     return _delegate.getInitialMessage();
   }
 
@@ -104,13 +106,13 @@ class FirebaseMessaging extends FirebasePluginPlatform {
   /// without using the FCM service.
   ///
   /// On Android & web, this returns `null`.
-  Future<String?> getAPNSToken() {
+  Future<String> getAPNSToken() {
     return _delegate.getAPNSToken();
   }
 
   /// Returns the default FCM token for this device.
-  Future<String?> getToken({
-    String? vapidKey,
+  Future<String> getToken({
+    String vapidKey,
   }) {
     return _delegate.getToken(
       vapidKey: vapidKey,
@@ -202,18 +204,18 @@ class FirebaseMessaging extends FirebasePluginPlatform {
 
   /// Send a new [RemoteMessage] to the FCM server. Android only.
   Future<void> sendMessage({
-    String? to,
-    Map<String, String>? data,
-    String? collapseKey,
-    String? messageId,
-    String? messageType,
-    int? ttl,
+    String to,
+    Map<String, String> data,
+    String collapseKey,
+    String messageId,
+    String messageType,
+    int ttl,
   }) {
     if (ttl != null) {
       assert(ttl >= 0);
     }
     return _delegate.sendMessage(
-      to: to ?? '${app.options.messagingSenderId}@fcm.googleapis.com',
+      to: to == null ? '${app.options.messagingSenderId}@fcm.googleapis.com' : to,
       data: data,
       collapseKey: collapseKey,
       messageId: messageId,

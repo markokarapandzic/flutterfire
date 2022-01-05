@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -59,7 +61,7 @@ class FirebaseApp {
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! FirebaseApp) return false;
+    if (other is FirebaseApp) return false;
     return other.name == name && other.options == options;
   }
 

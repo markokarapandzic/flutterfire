@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -31,7 +33,7 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
 
   /// The [FirebaseApp] this instance was initialized with.
   @protected
-  final FirebaseApp? appInstance;
+  final FirebaseApp appInstance;
 
   /// Returns the [FirebaseApp] for the current instance.
   FirebaseApp get app {
@@ -39,19 +41,19 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
       return Firebase.app();
     }
 
-    return appInstance!;
+    return appInstance;
   }
 
   static final Object _token = Object();
 
-  static FirebaseMessagingPlatform? _instance;
+  static FirebaseMessagingPlatform _instance;
 
   /// The current default [FirebaseMessagingPlatform] instance.
   ///
   /// It will always default to [MethodChannelFirebaseMessaging]
   /// if no other implementation was provided.
   static FirebaseMessagingPlatform get instance {
-    return _instance ??= MethodChannelFirebaseMessaging.instance;
+    return _instance;
   }
 
   /// Sets the [FirebaseMessagingPlatform.instance]
@@ -81,21 +83,21 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
   static final StreamController<RemoteMessage> onMessageOpenedApp =
       StreamController<RemoteMessage>.broadcast();
 
-  static BackgroundMessageHandler? _onBackgroundMessageHandler;
+  static BackgroundMessageHandler _onBackgroundMessageHandler;
 
   /// Set a message handler function which is called when the app is in the
   /// background or terminated.
   ///
   /// This provided handler must be a top-level function and cannot be
   /// anonymous otherwise an [ArgumentError] will be thrown.
-  static BackgroundMessageHandler? get onBackgroundMessage {
+  static BackgroundMessageHandler get onBackgroundMessage {
     return _onBackgroundMessageHandler;
   }
 
   /// Allows the background message handler to be created and calls the
   /// instance delegate [registerBackgroundMessageHandler] to perform any
   /// platform specific registration logic.
-  static set onBackgroundMessage(BackgroundMessageHandler? handler) {
+  static set onBackgroundMessage(BackgroundMessageHandler handler) {
     _onBackgroundMessageHandler = handler;
 
     if (handler != null) {
@@ -117,7 +119,7 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
   /// calls.
   @protected
   FirebaseMessagingPlatform setInitialValues({
-    bool? isAutoInitEnabled,
+    bool isAutoInitEnabled,
   }) {
     throw UnimplementedError('setInitialValues() is not implemented');
   }
@@ -136,7 +138,7 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
   /// This should be used to determine whether specific notification interaction
   /// should open the app with a specific purpose (e.g. opening a chat message,
   /// specific screen etc).
-  Future<RemoteMessage?> getInitialMessage() {
+  Future<RemoteMessage> getInitialMessage() {
     throw UnimplementedError('getInitialMessage() is not implemented');
   }
 
@@ -158,13 +160,13 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
 
   /// On iOS & MacOS, it is possible to get the users APNs token. This may be required
   /// if you want to send messages to your iOS devices without using the FCM service.
-  Future<String?> getAPNSToken() {
+  Future<String> getAPNSToken() {
     throw UnimplementedError('getAPNSToken() is not implemented');
   }
 
   /// Returns the default FCM token for this device and optionally [senderId].
-  Future<String?> getToken({
-    String? vapidKey,
+  Future<String> getToken({
+    String vapidKey,
   }) {
     throw UnimplementedError('getToken() is not implemented');
   }
@@ -284,11 +286,11 @@ abstract class FirebaseMessagingPlatform extends PlatformInterface {
   /// Send a new [RemoteMessage] to the FCM server.
   Future<void> sendMessage({
     required String to,
-    Map<String, String>? data,
-    String? collapseKey,
-    String? messageId,
-    String? messageType,
-    int? ttl,
+    Map<String, String> data,
+    String collapseKey,
+    String messageId,
+    String messageType,
+    int ttl,
   }) {
     throw UnimplementedError('sendMessage() is not implemented');
   }

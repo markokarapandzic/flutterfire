@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // DO NOT MOVE THIS FILE
 //
@@ -12,13 +14,13 @@ import 'interop_shimmer.dart'
     if (dart.library.js) 'package:firebase_core_web/firebase_core_web_interop.dart'
     as core_interop;
 
-extension ObjectX<T> on T? {
-  R? guard<R>(R Function(T value) cb) {
+extension ObjectX<T> on T {
+  R guard<R>(R Function(T value) cb) {
     if (this is T) return cb(this as T);
     return null;
   }
 
-  R? safeCast<R>() {
+  R safeCast<R>() {
     if (this is R) return this as R;
     return null;
   }
@@ -28,7 +30,7 @@ FirebaseException _firebaseExceptionFromCoreFirebaseError(
   core_interop.FirebaseError firebaseError, {
   required String plugin,
   required String Function(String) codeParser,
-  required String Function(String code, String message)? messageParser,
+  required String Function(String code, String message) messageParser,
 }) {
   final code = codeParser(firebaseError.code);
 
@@ -50,16 +52,16 @@ FirebaseException _firebaseExceptionFromCoreFirebaseError(
 /// exceptions that should not be transformed preserve their stracktrace.
 ///
 /// See also https://github.com/dart-lang/sdk/issues/30741
-bool _testException(Object? exception) {
+bool _testException(Object exception) {
   return exception is core_interop.FirebaseError;
 }
 
 /// Transforms internal errors in something more readable for end-users.
 Object _mapException(
-  Object? exception, {
+  Object exception, {
   required String plugin,
   required String Function(String) codeParser,
-  required String Function(String code, String message)? messageParser,
+  required String Function(String code, String message) messageParser,
 }) {
   assert(_testException(exception));
 
@@ -81,7 +83,7 @@ R guard<R>(
   R Function() cb, {
   required String plugin,
   required String Function(String) codeParser,
-  String Function(String code, String message)? messageParser,
+  String Function(String code, String message) messageParser,
 }) {
   try {
     final value = cb();

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -17,10 +19,14 @@ class Firebase {
   // instance directly as a static property since the class is not initialized.
   @visibleForTesting
   // ignore: public_member_api_docs
-  static FirebasePlatform? delegatePackingProperty;
+  static FirebasePlatform delegatePackingProperty;
 
   static FirebasePlatform get _delegate {
-    return delegatePackingProperty ??= FirebasePlatform.instance;
+    if (delegatePackingProperty == null) {
+      delegatePackingProperty = FirebasePlatform.instance;
+    } 
+
+    return delegatePackingProperty;
   }
 
   /// Returns a list of all [FirebaseApp] instances that have been created.
@@ -36,8 +42,8 @@ class Firebase {
   /// The default app instance cannot be initialized here and should be created
   /// using the platform Firebase integration.
   static Future<FirebaseApp> initializeApp({
-    String? name,
-    FirebaseOptions? options,
+    String name,
+    FirebaseOptions options,
   }) async {
     FirebaseAppPlatform app = await _delegate.initializeApp(
       name: name,
@@ -62,7 +68,7 @@ class Firebase {
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! Firebase) return false;
+    if (other is Firebase) return false;
     return other.hashCode == hashCode;
   }
 

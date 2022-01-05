@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -7,7 +9,7 @@ import 'package:firebase_messaging_platform_interface/firebase_messaging_platfor
 
 /// Converts an [int] into it's [AndroidNotificationPriority] representation.
 AndroidNotificationPriority convertToAndroidNotificationPriority(
-    int? priority) {
+    int priority) {
   switch (priority) {
     case -2:
       return AndroidNotificationPriority.minimumPriority;
@@ -26,7 +28,7 @@ AndroidNotificationPriority convertToAndroidNotificationPriority(
 
 /// Converts an [int] into it's [AndroidNotificationVisibility] representation.
 AndroidNotificationVisibility convertToAndroidNotificationVisibility(
-    int? visibility) {
+    int visibility) {
   switch (visibility) {
     case -1:
       return AndroidNotificationVisibility.secret;
@@ -40,7 +42,7 @@ AndroidNotificationVisibility convertToAndroidNotificationVisibility(
 }
 
 /// Converts an [int] into it's [AuthorizationStatus] representation.
-AuthorizationStatus convertToAuthorizationStatus(int? status) {
+AuthorizationStatus convertToAuthorizationStatus(int status) {
   // Can be null on unsupported platforms, e.g. iOS < 10.
   if (status == null) {
     return AuthorizationStatus.notDetermined;
@@ -60,7 +62,7 @@ AuthorizationStatus convertToAuthorizationStatus(int? status) {
 }
 
 /// Converts an [int] into it's [AppleNotificationSetting] representation.
-AppleNotificationSetting convertToAppleNotificationSetting(int? status) {
+AppleNotificationSetting convertToAppleNotificationSetting(int status) {
   // Can be null on unsupported platforms, e.g. iOS < 10.
   if (status == null) {
     return AppleNotificationSetting.notSupported;
@@ -78,7 +80,7 @@ AppleNotificationSetting convertToAppleNotificationSetting(int? status) {
 }
 
 /// Converts an [int] into its [AppleShowPreviewSetting] representation.
-AppleShowPreviewSetting convertToAppleShowPreviewSetting(int? status) {
+AppleShowPreviewSetting convertToAppleShowPreviewSetting(int status) {
   switch (status) {
     case -1:
       return AppleShowPreviewSetting.notSupported;
