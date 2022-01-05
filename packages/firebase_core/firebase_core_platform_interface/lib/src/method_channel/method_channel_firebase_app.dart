@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -20,7 +22,7 @@ class MethodChannelFirebaseApp extends FirebaseAppPlatform {
     FirebaseOptions options, {
     isAutomaticDataCollectionEnabled,
   })  : _isAutomaticDataCollectionEnabled =
-            isAutomaticDataCollectionEnabled ?? false,
+            isAutomaticDataCollectionEnabled == null ? false : isAutomaticDataCollectionEnabled,
         super(name, options);
 
   /// Keeps track of whether this app has been deleted by the user.

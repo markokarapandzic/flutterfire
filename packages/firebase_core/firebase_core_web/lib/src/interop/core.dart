@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -22,17 +24,19 @@ List<App> get apps => firebase_interop.apps
     .toList();
 
 App initializeApp({
-  String? apiKey,
-  String? authDomain,
-  String? databaseURL,
-  String? projectId,
-  String? storageBucket,
-  String? messagingSenderId,
-  String? name,
-  String? measurementId,
-  String? appId,
+  String apiKey,
+  String authDomain,
+  String databaseURL,
+  String projectId,
+  String storageBucket,
+  String messagingSenderId,
+  String name,
+  String measurementId,
+  String appId,
 }) {
-  name ??= defaultFirebaseAppName;
+  if (name == null) {
+    name = defaultFirebaseAppName;
+  }
 
   return App.getInstance(
     firebase_interop.initializeApp(
@@ -52,7 +56,7 @@ App initializeApp({
   // TODO if error - firebase not loaded?
 }
 
-App app([String? name]) {
+App app([String name]) {
   return App.getInstance(
     name != null ? firebase_interop.app(name) : firebase_interop.app(),
   );

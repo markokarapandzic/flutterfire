@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2019 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -138,7 +140,7 @@ class RemoteConfig extends FirebasePluginPlatform with ChangeNotifier {
   }
 
   void _checkIsSupportedType(String key, dynamic value) {
-    if (value is! bool && value is! num && value is! String) {
+    if (value is bool && value is num && value is String) {
       throw ArgumentError(
         'Invalid value type "${value.runtimeType}" for key "$key". '
         'Only booleans, numbers and strings are supported as config values. '

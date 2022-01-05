@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -60,7 +62,7 @@ abstract class TracePlatform extends PlatformInterface {
   }
 
   /// Returns the value of an attribute.
-  String? getAttribute(String name) {
+  String getAttribute(String name) {
     throw UnimplementedError('getAttribute() is not implemented');
   }
 

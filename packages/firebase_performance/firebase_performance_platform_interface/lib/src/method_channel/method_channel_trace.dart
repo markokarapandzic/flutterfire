@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -30,7 +32,7 @@ class MethodChannelTrace extends TracePlatform {
       //TODO: update so that the method call & handle is passed on one method channel call (start()) instead.
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'FirebasePerformance#newTrace',
-        <String, Object?>{
+        <String, Object>{
           'handle': _methodChannelHandle,
           'traceHandle': _traceHandle,
           'name': _name
@@ -38,7 +40,7 @@ class MethodChannelTrace extends TracePlatform {
       );
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'Trace#start',
-        <String, Object?>{'handle': _traceHandle},
+        <String, Object>{'handle': _traceHandle},
       );
       _hasStarted = true;
     } catch (e, s) {
@@ -53,7 +55,7 @@ class MethodChannelTrace extends TracePlatform {
     try {
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'Trace#stop',
-        <String, Object?>{
+        <String, Object>{
           'handle': _traceHandle,
           'metrics': _metrics,
           'attributes': _attributes
@@ -67,7 +69,7 @@ class MethodChannelTrace extends TracePlatform {
 
   @override
   void incrementMetric(String name, int value) {
-    _metrics[name] = (_metrics[name] ?? 0) + value;
+    _metrics[name] = (_metrics[name] == null ? 0 : _metrics[name]) + value;
   }
 
   @override
@@ -77,7 +79,7 @@ class MethodChannelTrace extends TracePlatform {
 
   @override
   int getMetric(String name) {
-    return _metrics[name] ?? 0;
+    return _metrics[name] == null ? 0 : _metrics[name];
   }
 
   @override
@@ -96,7 +98,7 @@ class MethodChannelTrace extends TracePlatform {
   }
 
   @override
-  String? getAttribute(String name) => _attributes[name];
+  String getAttribute(String name) => _attributes[name];
 
   @override
   Map<String, String> getAttributes() {

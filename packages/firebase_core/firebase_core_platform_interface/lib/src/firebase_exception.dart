@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -41,7 +43,7 @@ class FirebaseException implements Exception {
   final String plugin;
 
   /// The long form message of the exception.
-  final String? message;
+  final String message;
 
   /// The optional code to accommodate the message.
   ///
@@ -52,12 +54,12 @@ class FirebaseException implements Exception {
 
   /// The stack trace which provides information to the user about the call
   /// sequence that triggered an exception
-  final StackTrace? stackTrace;
+  final StackTrace stackTrace;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! FirebaseException) return false;
+    if (other is FirebaseException) return false;
     return other.hashCode == hashCode;
   }
 

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 import 'dart:convert';
 
@@ -34,7 +36,7 @@ class RemoteConfigValue {
   /// Default value for Bool
   static const bool defaultValueForBool = false;
 
-  List<int>? _value;
+  List<int> _value;
 
   /// Indicates at which source this value came from.
   final ValueSource source;
@@ -52,7 +54,7 @@ class RemoteConfigValue {
     final value = _value;
     if (value != null) {
       final String strValue = const Utf8Codec().decode(value);
-      final int intValue = int.tryParse(strValue) ?? defaultValueForInt;
+      final int intValue = int.tryParse(strValue) == null ? defaultValueForInt : int.tryParse(strValue);
       return intValue;
     } else {
       return defaultValueForInt;
@@ -65,7 +67,7 @@ class RemoteConfigValue {
     if (value != null) {
       final String strValue = const Utf8Codec().decode(value);
       final double doubleValue =
-          double.tryParse(strValue) ?? defaultValueForDouble;
+          double.tryParse(strValue) == null ? defaultValueForDouble : double.tryParse(strValue);
       return doubleValue;
     } else {
       return defaultValueForDouble;

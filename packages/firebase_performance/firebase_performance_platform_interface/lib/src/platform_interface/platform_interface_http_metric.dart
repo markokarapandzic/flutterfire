@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -24,42 +26,42 @@ abstract class HttpMetricPlatform extends PlatformInterface {
   static const int maxCustomAttributes = 5;
 
   /// HttpResponse code of the request.
-  int? get httpResponseCode {
+  int get httpResponseCode {
     throw UnimplementedError('get httpResponseCode is not implemented');
   }
 
   /// Size of the request payload.
-  int? get requestPayloadSize {
+  int get requestPayloadSize {
     throw UnimplementedError('get requestPayloadSize is not implemented');
   }
 
   /// Content type of the response such as text/html, application/json, etc...
-  String? get responseContentType {
+  String get responseContentType {
     throw UnimplementedError('get responseContentType is not implemented');
   }
 
   /// Size of the response payload.
-  int? get responsePayloadSize {
+  int get responsePayloadSize {
     throw UnimplementedError('get responsePayloadSize is not implemented');
   }
 
   /// Sets the httpResponse code of the request
-  set httpResponseCode(int? httpResponseCode) {
+  set httpResponseCode(int httpResponseCode) {
     throw UnimplementedError('set httpResponseCode() is not implemented');
   }
 
   /// Sets the size of the request payload
-  set requestPayloadSize(int? requestPayloadSize) {
+  set requestPayloadSize(int requestPayloadSize) {
     throw UnimplementedError('set requestPayloadSize() is not implemented');
   }
 
   /// Sets the size of the response payload
-  set responsePayloadSize(int? responsePayloadSize) {
+  set responsePayloadSize(int responsePayloadSize) {
     throw UnimplementedError('set responsePayload() is not implemented');
   }
 
   /// Content type of the response such as text/html, application/json, etc..
-  set responseContentType(String? responseContentType) {
+  set responseContentType(String responseContentType) {
     throw UnimplementedError('set responseContentType() is not implemented');
   }
 
@@ -84,7 +86,7 @@ abstract class HttpMetricPlatform extends PlatformInterface {
   }
 
   /// Returns the value of an attribute.
-  String? getAttribute(String name) {
+  String getAttribute(String name) {
     throw UnimplementedError('getAttribute() is not implemented');
   }
 

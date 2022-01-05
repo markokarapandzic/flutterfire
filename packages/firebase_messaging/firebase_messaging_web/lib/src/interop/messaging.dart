@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -16,7 +18,7 @@ import 'firebase_interop.dart' as firebase_interop;
 export 'messaging_interop.dart';
 
 /// Given an AppJSImp, return the Messaging instance.
-Messaging getMessagingInstance([App? app]) {
+Messaging getMessagingInstance([App app]) {
   return Messaging.getInstance(app != null
       ? firebase_interop.messaging(app.jsObject)
       : firebase_interop.messaging());
@@ -26,7 +28,11 @@ class Messaging extends JsObjectWrapper<messaging_interop.MessagingJsImpl> {
   static final _expando = Expando<Messaging>();
 
   static Messaging getInstance(messaging_interop.MessagingJsImpl jsObject) {
-    return _expando[jsObject] ??= Messaging._fromJsObject(jsObject);
+    if (_expando[jsObject] == null) {
+      _expando[jsObject] = Messaging._fromJsObject(jsObject); 
+    }
+
+    return _expando[jsObject];
   }
 
   static bool isSupported() => messaging_interop.isSupported();
@@ -42,7 +48,7 @@ class Messaging extends JsObjectWrapper<messaging_interop.MessagingJsImpl> {
 
   /// After calling [requestPermission] you can call this method to get an FCM registration token
   /// that can be used to send push messages to this user.
-  Future<String> getToken({String? vapidKey}) =>
+  Future<String> getToken({String vapidKey}) =>
       handleThenable(jsObject.getToken(vapidKey == null
           ? null
           : {
@@ -50,7 +56,7 @@ class Messaging extends JsObjectWrapper<messaging_interop.MessagingJsImpl> {
             }));
 
   // ignore: close_sinks
-  StreamController<MessagePayload>? _onMessageController;
+  StreamController<MessagePayload> _onMessageController;
 
   /// When a push message is received and the user is currently on a page for your origin,
   /// the message is passed to the page and an [onMessage] event is dispatched with the payload of the push message.
@@ -58,8 +64,8 @@ class Messaging extends JsObjectWrapper<messaging_interop.MessagingJsImpl> {
       _createOnMessageStream(_onMessageController);
 
   Stream<MessagePayload> _createOnMessageStream(
-      StreamController<MessagePayload>? controller) {
-    StreamController<MessagePayload>? _controller = controller;
+      StreamController<MessagePayload> controller) {
+    StreamController<MessagePayload> _controller = controller;
     if (_controller == null) {
       _controller = StreamController.broadcast(sync: true);
       final nextWrapper = allowInterop((payload) {
@@ -81,9 +87,9 @@ class NotificationPayload
       messaging_interop.NotificationPayloadJsImpl jsObject)
       : super.fromJsObject(jsObject);
 
-  String? get title => jsObject.title;
-  String? get body => jsObject.body;
-  String? get image => jsObject.image;
+  String get title => jsObject.title;
+  String get body => jsObject.body;
+  String get image => jsObject.image;
 }
 
 class MessagePayload
@@ -91,21 +97,21 @@ class MessagePayload
   MessagePayload._fromJsObject(messaging_interop.MessagePayloadJsImpl jsObject)
       : super.fromJsObject(jsObject);
 
-  String? get collapseKey => jsObject.collapseKey;
-  FcmOptions? get fcmOptions => jsObject.fcmOptions == null
+  String get collapseKey => jsObject.collapseKey;
+  FcmOptions get fcmOptions => jsObject.fcmOptions == null
       ? null
       : FcmOptions._fromJsObject(jsObject.fcmOptions!);
-  NotificationPayload? get notification => jsObject.notification == null
+  NotificationPayload get notification => jsObject.notification == null
       ? null
       : NotificationPayload._fromJsObject(jsObject.notification!);
-  Map<String, dynamic>? get data => dartify(jsObject.data);
-  String? get from => jsObject.from;
+  Map<String, dynamic> get data => dartify(jsObject.data);
+  String get from => jsObject.from;
 }
 
 class FcmOptions extends JsObjectWrapper<messaging_interop.FcmOptionsJsImpl> {
   FcmOptions._fromJsObject(messaging_interop.FcmOptionsJsImpl jsObject)
       : super.fromJsObject(jsObject);
 
-  String? get analyticsLabel => jsObject.analyticsLabel;
-  String? get link => jsObject.link;
+  String get analyticsLabel => jsObject.analyticsLabel;
+  String get link => jsObject.link;
 }

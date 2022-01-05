@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -9,7 +11,7 @@ import 'performance_interop.dart' as performance_interop;
 
 /// Given an AppJSImp, return the Performance instance. Performance web
 /// only works with the default app.
-Performance getPerformanceInstance([App? app]) {
+Performance getPerformanceInstance([App app]) {
   return Performance.getInstance(firebase_interop.performance());
 }
 
@@ -19,8 +21,13 @@ class Performance
 
   static Performance getInstance(
     performance_interop.PerformanceJsImpl jsObject,
-  ) =>
-      _expando[jsObject] ??= Performance._fromJsObject(jsObject);
+  ) { 
+      if (_expando[jsObject] == null) {
+        _expando[jsObject] = Performance._fromJsObject(jsObject);
+      }
+
+      return _expando[jsObject];
+    }
 
   Performance._fromJsObject(performance_interop.PerformanceJsImpl jsObject)
       : super.fromJsObject(jsObject);
@@ -57,7 +64,7 @@ class Trace extends JsObjectWrapper<performance_interop.TraceJsImpl> {
 
   int getMetric(String metricName) => jsObject.getMetric(metricName);
 
-  void incrementMetric(String metricName, [int? num]) {
+  void incrementMetric(String metricName, [int num]) {
     if (num != null) {
       return jsObject.incrementMetric(metricName, num);
     } else {

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -27,7 +29,11 @@ class App extends JsObjectWrapper<AppJsImpl> {
 
   /// Creates a new App from a [jsObject].
   static App getInstance(AppJsImpl jsObject) {
-    return _expando[jsObject] ??= App._fromJsObject(jsObject);
+    if ((_expando[jsObject]) == null) {
+      _expando[jsObject] = App._fromJsObject(jsObject);
+    }
+
+    return _expando[jsObject];
   }
 
   /// Deletes the app and frees resources of all App's services.

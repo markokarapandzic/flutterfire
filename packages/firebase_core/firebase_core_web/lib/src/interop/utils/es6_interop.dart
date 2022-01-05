@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -15,5 +17,5 @@ import 'func.dart';
 @JS('Promise')
 class PromiseJsImpl<T> {
   external PromiseJsImpl(Function resolver);
-  external PromiseJsImpl then([Func1? onResolve, Func1? onReject]);
+  external PromiseJsImpl then([Func1 onResolve, Func1 onReject]);
 }

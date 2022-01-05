@@ -1,8 +1,11 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance_platform_interface/firebase_performance_platform_interface.dart';
@@ -27,7 +30,7 @@ abstract class FirebasePerformancePlatform extends PlatformInterface {
   /// Create an instance using [app].
   FirebasePerformancePlatform({this.appInstance}) : super(token: _token);
 
-  static FirebasePerformancePlatform? _instance;
+  static FirebasePerformancePlatform _instance;
 
   static final Object _token = Object();
 
@@ -36,7 +39,11 @@ abstract class FirebasePerformancePlatform extends PlatformInterface {
   /// It will always default to [MethodChannelFirebasePerformance]
   /// if no other implementation was provided.
   static FirebasePerformancePlatform get instance {
-    return _instance ??= MethodChannelFirebasePerformance.instance;
+    if (_instance == null) {
+      _instance = MethodChannelFirebasePerformance.instance;
+    }
+
+    return _instance;
   }
 
   /// Sets the [FirebasePerformancePlatform] instance.
@@ -54,10 +61,10 @@ abstract class FirebasePerformancePlatform extends PlatformInterface {
 
   /// The [FirebaseApp] this instance was initialized with.
   @protected
-  final FirebaseApp? appInstance;
+  final FirebaseApp appInstance;
 
   /// Returns the [FirebaseApp] for the current instance.
-  FirebaseApp get app => appInstance ?? Firebase.app();
+  FirebaseApp get app => appInstance == null ? Firebase.app() : appInstance;
 
   /// Enables delegates to create new instances of themselves if a none default
   /// [FirebaseApp] instance is required by the user. Currently only default Firebase app only.

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -21,14 +23,15 @@ import 'src/utils.dart' as utils;
 /// delegates calls to messaging web plugin.
 class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
   /// Instance of Messaging from the web plugin
-  messaging_interop.Messaging? _webMessaging;
+  messaging_interop.Messaging _webMessaging;
 
   messaging_interop.Messaging get _delegate {
-    _webMessaging ??=
-        messaging_interop.getMessagingInstance(core_interop.app(app.name));
+    if (_webMessaging == null) {
+      _webMessaging = messaging_interop.getMessagingInstance(core_interop.app(app.name));
+    }
 
     if (!_initialized && messaging_interop.isSupported()) {
-      _webMessaging!.onMessage
+      _webMessaging.onMessage
           .listen((messaging_interop.MessagePayload webMessagePayload) {
         RemoteMessage remoteMessage =
             RemoteMessage.fromMap(utils.messagePayloadToMap(webMessagePayload));
@@ -38,7 +41,7 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
       _initialized = true;
     }
 
-    return _webMessaging!;
+    return _webMessaging;
   }
 
   /// Called by PluginRegistry to register this plugin for Flutter Web
@@ -47,13 +50,13 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
     FirebaseMessagingPlatform.instance = FirebaseMessagingWeb();
   }
 
-  Stream<String>? _noopOnTokenRefreshStream;
+  Stream<String> _noopOnTokenRefreshStream;
 
   static bool _initialized = false;
 
   /// Builds an instance of [FirebaseMessagingWeb] with an optional [FirebaseApp] instance
   /// If [app] is null then the created instance will use the default [FirebaseApp]
-  FirebaseMessagingWeb({FirebaseApp? app}) : super(appInstance: app);
+  FirebaseMessagingWeb({FirebaseApp app}) : super(appInstance: app);
 
   /// Updates user on browser support for Firebase.Messaging
   @override
@@ -70,7 +73,7 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
   }
 
   @override
-  FirebaseMessagingPlatform setInitialValues({bool? isAutoInitEnabled}) {
+  FirebaseMessagingPlatform setInitialValues({bool isAutoInitEnabled}) {
     // Not required on web, but prevents UnimplementedError being thrown.
     return this;
   }
@@ -83,7 +86,7 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
   }
 
   @override
-  Future<RemoteMessage?> getInitialMessage() async {
+  Future<RemoteMessage> getInitialMessage() async {
     return null;
   }
 
@@ -100,12 +103,12 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
   }
 
   @override
-  Future<String?> getAPNSToken() async {
+  Future<String> getAPNSToken() async {
     return null;
   }
 
   @override
-  Future<String?> getToken({String? vapidKey}) async {
+  Future<String> getToken({String vapidKey}) async {
     _delegate;
 
     if (!_initialized) {
@@ -123,8 +126,11 @@ class FirebaseMessagingWeb extends FirebaseMessagingPlatform {
     // onTokenRefresh is deprecated on web, however since this is a non-critical
     // api we just return a noop stream to keep functionality the same across
     // platforms.
-    return _noopOnTokenRefreshStream ??=
-        StreamController<String>.broadcast().stream;
+    if (_noopOnTokenRefreshStream == null) {
+      _noopOnTokenRefreshStream = StreamController<String>.broadcast().stream;
+    }
+
+    return _noopOnTokenRefreshStream;
   }
 
   @override

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -36,10 +38,10 @@ abstract class FirebasePluginPlatform extends PlatformInterface {
   /// Returns any plugin constants this plugin app instance has initialized.
   Map<dynamic, dynamic> get pluginConstants {
     final appConstants =
-        _constantsForPluginApps[_appName] as Map<Object?, Object?>?;
+        _constantsForPluginApps[_appName] as Map<Object, Object>;
 
     if (appConstants != null && appConstants[_methodChannelName] != null) {
-      return appConstants[_methodChannelName]! as Map<dynamic, dynamic>;
+      return appConstants[_methodChannelName] as Map<dynamic, dynamic>;
     }
 
     return {};

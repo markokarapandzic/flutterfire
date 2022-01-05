@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:convert' show utf8;
 import 'package:firebase_core_web/firebase_core_web_interop.dart'
     as core_interop;
@@ -6,7 +8,7 @@ import 'firebase_interop.dart' as firebase_interop;
 import 'firebase_remote_config_interop.dart' as remote_config_interop;
 
 /// Given an AppJSImp, return the Remote Config instance.
-RemoteConfig getRemoteConfigInstance(core_interop.App? app) {
+RemoteConfig getRemoteConfigInstance(core_interop.App app) {
   if (app == null) {
     return RemoteConfig.getInstance(firebase_interop.remoteConfig());
   }
@@ -20,8 +22,13 @@ class RemoteConfig extends core_interop
 
   static RemoteConfig getInstance(
     remote_config_interop.RemoteConfigJsImpl jsObject,
-  ) =>
-      _expando[jsObject] ??= RemoteConfig._fromJsObject(jsObject);
+  ) {
+      if (_expando[jsObject] == null) {
+        _expando[jsObject] = RemoteConfig._fromJsObject(jsObject);
+      }
+
+      return _expando[jsObject];
+    }
 
   RemoteConfig._fromJsObject(remote_config_interop.RemoteConfigJsImpl jsObject)
       : super.fromJsObject(jsObject);

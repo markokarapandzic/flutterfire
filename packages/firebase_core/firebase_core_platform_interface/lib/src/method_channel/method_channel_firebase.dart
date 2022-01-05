@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -30,7 +32,7 @@ class MethodChannelFirebase extends FirebasePlatform {
   Future<void> _initializeCore() async {
     List<Map> apps = (await channel.invokeListMethod<Map>(
       'Firebase#initializeCore',
-    ))!;
+    ));
 
     apps.forEach(_initializeFirebaseAppFromMap);
     isCoreInitialized = true;
@@ -64,8 +66,8 @@ class MethodChannelFirebase extends FirebasePlatform {
   /// Internally initializes core if it is not yet ready.
   @override
   Future<FirebaseAppPlatform> initializeApp({
-    String? name,
-    FirebaseOptions? options,
+    String name,
+    FirebaseOptions options,
   }) async {
     // Ensure that core has been initialized on the first usage of
     // initializeApp
@@ -77,7 +79,7 @@ class MethodChannelFirebase extends FirebasePlatform {
     // If no instance is available, the user has not set up Firebase correctly for
     // their platform.
     if (name == null || name == defaultFirebaseAppName) {
-      MethodChannelFirebaseApp? defaultApp =
+      MethodChannelFirebaseApp defaultApp =
           appInstances[defaultFirebaseAppName];
 
       // If options are present & no default app has been setup, the user is
@@ -89,7 +91,7 @@ class MethodChannelFirebase extends FirebasePlatform {
             'appName': defaultFirebaseAppName,
             'options': options.asMap
           },
-        ))!);
+        )));
         defaultApp = appInstances[defaultFirebaseAppName];
       }
 
@@ -115,7 +117,7 @@ class MethodChannelFirebase extends FirebasePlatform {
         // Options are roughly the same; so we'll return the existing app.
       }
 
-      return appInstances[defaultFirebaseAppName]!;
+      return appInstances[defaultFirebaseAppName];
     }
 
     assert(
@@ -130,10 +132,10 @@ class MethodChannelFirebase extends FirebasePlatform {
 
     _initializeFirebaseAppFromMap((await channel.invokeMapMethod(
       'Firebase#initializeApp',
-      <String, dynamic>{'appName': name, 'options': options!.asMap},
-    ))!);
+      <String, dynamic>{'appName': name, 'options': options.asMap},
+    )));
 
-    return appInstances[name]!;
+    return appInstances[name];
   }
 
   /// Returns a [FirebaseAppPlatform] by [name].
@@ -143,7 +145,7 @@ class MethodChannelFirebase extends FirebasePlatform {
   @override
   FirebaseAppPlatform app([String name = defaultFirebaseAppName]) {
     if (appInstances.containsKey(name)) {
-      return appInstances[name]!;
+      return appInstances[name];
     }
 
     throw noAppExists(name);

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -24,22 +26,22 @@ class HttpMetric {
   HttpMetricPlatform _delegate;
 
   /// HttpResponse code of the request.
-  int? get httpResponseCode => _delegate.httpResponseCode;
+  int get httpResponseCode => _delegate.httpResponseCode;
 
   /// Size of the request payload.
-  int? get requestPayloadSize => _delegate.requestPayloadSize;
+  int get requestPayloadSize => _delegate.requestPayloadSize;
 
   /// Content type of the response such as text/html, application/json, etc...
-  String? get responseContentType => _delegate.responseContentType;
+  String get responseContentType => _delegate.responseContentType;
 
   /// Size of the response payload.
-  int? get responsePayloadSize => _delegate.responsePayloadSize;
+  int get responsePayloadSize => _delegate.responsePayloadSize;
 
   /// HttpResponse code of the request.
   ///
   /// If the [HttpMetric] has already been stopped, returns immediately without
   /// taking action.
-  set httpResponseCode(int? httpResponseCode) {
+  set httpResponseCode(int httpResponseCode) {
     _delegate.httpResponseCode = httpResponseCode;
   }
 
@@ -47,7 +49,7 @@ class HttpMetric {
   ///
   /// If the [HttpMetric] has already been stopped, returns immediately without
   /// taking action.
-  set requestPayloadSize(int? requestPayloadSize) {
+  set requestPayloadSize(int requestPayloadSize) {
     _delegate.requestPayloadSize = requestPayloadSize;
   }
 
@@ -55,7 +57,7 @@ class HttpMetric {
   ///
   /// If the [HttpMetric] has already been stopped, returns immediately without
   /// taking action.
-  set responseContentType(String? responseContentType) {
+  set responseContentType(String responseContentType) {
     _delegate.responseContentType = responseContentType;
   }
 
@@ -63,7 +65,7 @@ class HttpMetric {
   ///
   /// If the [HttpMetric] has already been stopped, returns immediately without
   /// taking action.
-  set responsePayloadSize(int? responsePayloadSize) {
+  set responsePayloadSize(int responsePayloadSize) {
     _delegate.responsePayloadSize = responsePayloadSize;
   }
 
@@ -120,7 +122,7 @@ class HttpMetric {
   /// Returns the value of an attribute.
   ///
   /// Returns `null` if an attribute with this [name] has not been added.
-  String? getAttribute(String name) => _delegate.getAttribute(name);
+  String getAttribute(String name) => _delegate.getAttribute(name);
 
   /// All attributes added.
   Map<String, String> getAttributes() {

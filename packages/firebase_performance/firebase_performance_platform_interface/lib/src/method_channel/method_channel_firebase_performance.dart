@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -53,9 +55,9 @@ class MethodChannelFirebasePerformance extends FirebasePerformancePlatform {
     try {
       final isPerformanceCollectionEnabled = await channel.invokeMethod<bool>(
         'FirebasePerformance#isPerformanceCollectionEnabled',
-        <String, Object?>{'handle': _handle},
+        <String, Object>{'handle': _handle},
       );
-      return isPerformanceCollectionEnabled!;
+      return isPerformanceCollectionEnabled;
     } catch (e, s) {
       throw convertPlatformException(e, s);
     }
@@ -66,7 +68,7 @@ class MethodChannelFirebasePerformance extends FirebasePerformancePlatform {
     try {
       await channel.invokeMethod<void>(
         'FirebasePerformance#setPerformanceCollectionEnabled',
-        <String, Object?>{'handle': _handle, 'enable': enabled},
+        <String, Object>{'handle': _handle, 'enable': enabled},
       );
     } catch (e, s) {
       throw convertPlatformException(e, s);

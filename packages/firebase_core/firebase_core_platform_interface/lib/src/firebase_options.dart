@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -93,46 +95,46 @@ class FirebaseOptions {
 
   /// The auth domain used to handle redirects from OAuth provides on web
   /// platforms, for example "my-awesome-app.firebaseapp.com".
-  final String? authDomain;
+  final String authDomain;
 
   /// The database root URL, for example "https://my-awesome-app.firebaseio.com."
   ///
   /// This property should be set for apps that use Firebase Database.
-  final String? databaseURL;
+  final String databaseURL;
 
   /// The Google Cloud Storage bucket name, for example
   /// "my-awesome-app.appspot.com".
-  final String? storageBucket;
+  final String storageBucket;
 
   /// The project measurement ID value used on web platforms with analytics.
-  final String? measurementId;
+  final String measurementId;
 
   /// The tracking ID for Google Analytics, for example "UA-12345678-1", used to
   /// configure Google Analytics.
   ///
   /// This property is used on iOS only.
-  final String? trackingId;
+  final String trackingId;
 
   /// The URL scheme used by iOS secondary apps for Dynamic Links.
-  final String? deepLinkURLScheme;
+  final String deepLinkURLScheme;
 
   /// The Android client ID from the Firebase Console, for example
   /// "12345.apps.googleusercontent.com."
   ///
   /// This value is used by iOS only.
-  final String? androidClientId;
+  final String androidClientId;
 
   /// The iOS client ID from the Firebase Console, for example
   /// "12345.apps.googleusercontent.com."
   ///
   /// This value is used by iOS only.
-  final String? iosClientId;
+  final String iosClientId;
 
   /// The iOS bundle ID for the application. Defaults to `[[NSBundle mainBundle] bundleID]`
   /// when not set manually or in a plist.
   ///
   /// This property is used on iOS only.
-  final String? iosBundleId;
+  final String iosBundleId;
 
   /// The iOS App Group identifier to share data between the application and the
   /// application extensions.
@@ -141,11 +143,11 @@ class FirebaseOptions {
   /// application and on the Apple Developer Portal.
   ///
   /// This property is used on iOS only.
-  final String? appGroupId;
+  final String appGroupId;
 
   /// The current instance as a [Map].
-  Map<String, String?> get asMap {
-    return <String, String?>{
+  Map<String, String> get asMap {
+    return <String, String>{
       'apiKey': apiKey,
       'appId': appId,
       'messagingSenderId': messagingSenderId,
@@ -167,7 +169,7 @@ class FirebaseOptions {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! FirebaseOptions) return false;
+    if (other is FirebaseOptions) return false;
     return const MapEquality().equals(asMap, other.asMap);
   }
 

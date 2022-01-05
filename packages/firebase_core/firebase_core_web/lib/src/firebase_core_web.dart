@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: unsafe_html
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -42,8 +44,8 @@ class FirebaseCoreWeb extends FirebasePlatform {
   /// the window (window.flutterfire_web_sdk_version = 'x.x.x'). Do so at your
   /// own risk as the version might be unsupported or untested against.
   String get _firebaseSDKVersion {
-    return context['flutterfire_web_sdk_version'] ??
-        supportedFirebaseJsSdkVersion;
+    return context['flutterfire_web_sdk_version'] == null ?
+        supportedFirebaseJsSdkVersion : context['flutterfire_web_sdk_version'];
   }
 
   /// Returns a list of services which won't be automatically injected on
@@ -81,7 +83,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
     script.src = src;
     script.async = true;
     assert(document.head != null);
-    document.head!.append(script);
+    document.head.append(script);
     await script.onLoad.first;
   }
 
@@ -196,8 +198,8 @@ class FirebaseCoreWeb extends FirebasePlatform {
   /// using the platform Firebase integration.
   @override
   Future<FirebaseAppPlatform> initializeApp({
-    String? name,
-    FirebaseOptions? options,
+    String name,
+    FirebaseOptions options,
   }) async {
     if (!_isRequireJsDefined) {
       await _initializeCore();
@@ -243,7 +245,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
       }(),
     );
 
-    firebase.App? app;
+    firebase.App app;
 
     if (name == null || name == defaultFirebaseAppName) {
       bool defaultAppExists = false;
@@ -261,7 +263,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
           // check to see if options are roughly identical (so we don't unnecessarily
           // throw on minor differences such as platform specific keys missing,
           // e.g. hot reloads/restarts).
-          if (options.apiKey != app!.options.apiKey ||
+          if (options.apiKey != app.options.apiKey ||
               options.databaseURL != app.options.databaseURL ||
               options.storageBucket != app.options.storageBucket) {
             // Options are different; throw.
@@ -277,7 +279,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
         // At this point, there is no default app so we need to create it with
         // the users options.
         app = firebase.initializeApp(
-          apiKey: options!.apiKey,
+          apiKey: options.apiKey,
           authDomain: options.authDomain,
           databaseURL: options.databaseURL,
           projectId: options.projectId,
@@ -299,7 +301,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
       try {
         app = firebase.initializeApp(
           name: name,
-          apiKey: options!.apiKey,
+          apiKey: options.apiKey,
           authDomain: options.authDomain,
           databaseURL: options.databaseURL,
           projectId: options.projectId,
@@ -317,7 +319,7 @@ class FirebaseCoreWeb extends FirebasePlatform {
       }
     }
 
-    return _createFromJsApp(app!);
+    return _createFromJsApp(app);
   }
 
   /// Returns a [FirebaseAppPlatform] instance.

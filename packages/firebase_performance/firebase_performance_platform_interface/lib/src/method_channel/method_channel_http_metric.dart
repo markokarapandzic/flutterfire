@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -18,10 +20,10 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
   final int _httpMetricHandle;
   final String _url;
   final HttpMethod _httpMethod;
-  int? _httpResponseCode;
-  int? _requestPayloadSize;
-  String? _responseContentType;
-  int? _responsePayloadSize;
+  int _httpResponseCode;
+  int _requestPayloadSize;
+  String _responseContentType;
+  int _responsePayloadSize;
 
   bool _hasStarted = false;
   bool _hasStopped = false;
@@ -29,34 +31,34 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
   final Map<String, String> _attributes = <String, String>{};
 
   @override
-  int? get httpResponseCode => _httpResponseCode;
+  int get httpResponseCode => _httpResponseCode;
 
   @override
-  int? get requestPayloadSize => _requestPayloadSize;
+  int get requestPayloadSize => _requestPayloadSize;
 
   @override
-  String? get responseContentType => _responseContentType;
+  String get responseContentType => _responseContentType;
 
   @override
-  int? get responsePayloadSize => _responsePayloadSize;
+  int get responsePayloadSize => _responsePayloadSize;
 
   @override
-  set httpResponseCode(int? httpResponseCode) {
+  set httpResponseCode(int httpResponseCode) {
     _httpResponseCode = httpResponseCode;
   }
 
   @override
-  set requestPayloadSize(int? requestPayloadSize) {
+  set requestPayloadSize(int requestPayloadSize) {
     _requestPayloadSize = requestPayloadSize;
   }
 
   @override
-  set responseContentType(String? responseContentType) {
+  set responseContentType(String responseContentType) {
     _responseContentType = responseContentType;
   }
 
   @override
-  set responsePayloadSize(int? responsePayloadSize) {
+  set responsePayloadSize(int responsePayloadSize) {
     _responsePayloadSize = responsePayloadSize;
   }
 
@@ -67,7 +69,7 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
       //TODO: update so that the method call & handle is passed on one method channel call (start()) instead.
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'FirebasePerformance#newHttpMetric',
-        <String, Object?>{
+        <String, Object>{
           'handle': _methodChannelHandle,
           'httpMetricHandle': _httpMetricHandle,
           'url': _url,
@@ -76,7 +78,7 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
       );
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'HttpMetric#start',
-        <String, Object?>{'handle': _httpMetricHandle},
+        <String, Object>{'handle': _httpMetricHandle},
       );
       _hasStarted = true;
     } catch (e, s) {
@@ -90,7 +92,7 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
     try {
       await MethodChannelFirebasePerformance.channel.invokeMethod<void>(
         'HttpMetric#stop',
-        <String, Object?>{
+        <String, Object>{
           'handle': _httpMetricHandle,
           'attributes': _attributes,
           if (_httpResponseCode != null) 'httpResponseCode': _httpResponseCode,
@@ -124,7 +126,7 @@ class MethodChannelHttpMetric extends HttpMetricPlatform {
   }
 
   @override
-  String? getAttribute(String name) => _attributes[name];
+  String getAttribute(String name) => _attributes[name];
 
   @override
   Map<String, String> getAttributes() {

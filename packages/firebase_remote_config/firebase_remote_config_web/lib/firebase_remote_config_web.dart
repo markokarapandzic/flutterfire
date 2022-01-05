@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -13,7 +15,7 @@ import 'src/interop/firebase_remote_config.dart' as remote_config_interop;
 /// Web implementation of [FirebaseRemoteConfigPlatform].
 class FirebaseRemoteConfigWeb extends FirebaseRemoteConfigPlatform {
   /// The entry point for the [FirebaseRemoteConfigWeb] class.
-  FirebaseRemoteConfigWeb({FirebaseApp? app}) : super(appInstance: app);
+  FirebaseRemoteConfigWeb({FirebaseApp app}) : super(appInstance: app);
 
   /// Stub initializer to allow the [registerWith] to create an instance without
   /// registering the web delegates or listeners.
@@ -22,13 +24,17 @@ class FirebaseRemoteConfigWeb extends FirebaseRemoteConfigPlatform {
         super(appInstance: null);
 
   /// Instance of functions from the web plugin
-  remote_config_interop.RemoteConfig? _webRemoteConfig;
+  remote_config_interop.RemoteConfig _webRemoteConfig;
 
   /// Lazily initialize [_webRemoteConfig] on first method call
   remote_config_interop.RemoteConfig get _delegate {
-    return _webRemoteConfig ??= remote_config_interop.getRemoteConfigInstance(
-      core_interop.app(app.name),
-    );
+    if (_webRemoteConfig == null) {
+      _webRemoteConfig = remote_config_interop.getRemoteConfigInstance(
+        core_interop.app(app.name),
+      );
+    }
+
+    return _webRemoteConfig;
   }
 
   /// Create the default instance of the [FirebaseRemoteConfigPlatform] as a [FirebaseRemoteConfigWeb]
@@ -43,7 +49,7 @@ class FirebaseRemoteConfigWeb extends FirebaseRemoteConfigPlatform {
   }
 
   @override
-  FirebaseRemoteConfigPlatform delegateFor({FirebaseApp? app}) {
+  FirebaseRemoteConfigPlatform delegateFor({FirebaseApp app}) {
     return FirebaseRemoteConfigWeb(app: app);
   }
 

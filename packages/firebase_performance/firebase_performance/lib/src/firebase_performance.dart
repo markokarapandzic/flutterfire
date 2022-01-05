@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -14,7 +16,7 @@ class FirebasePerformance extends FirebasePluginPlatform {
   // Cached and lazily loaded instance of [FirebasePerformancePlatform] to avoid
   // creating a [MethodChannelFirebasePerformance] when not needed or creating an
   // instance with the default app before a user specifies an app.
-  FirebasePerformancePlatform? _delegatePackingProperty;
+  FirebasePerformancePlatform _delegatePackingProperty;
 
   /// Returns an instance using the default [FirebaseApp].
   static FirebasePerformance get instance {
@@ -32,9 +34,13 @@ class FirebasePerformance extends FirebasePluginPlatform {
   /// If called and no [_delegatePackingProperty] exists, it will first be
   /// created and assigned before returning the delegate.
   FirebasePerformancePlatform get _delegate {
-    return _delegatePackingProperty ??= FirebasePerformancePlatform.instanceFor(
-      app: app,
-    );
+    if (_delegatePackingProperty == null) {
+      _delegatePackingProperty = FirebasePerformancePlatform.instanceFor(
+        app: app,
+      );
+    }
+
+    return _delegatePackingProperty;
   }
 
   /// Returns an instance using a specified [FirebaseApp].

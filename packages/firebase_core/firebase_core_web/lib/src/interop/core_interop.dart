@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -22,10 +24,10 @@ external List<AppJsImpl> get apps;
 external String get SDK_VERSION;
 
 @JS()
-external AppJsImpl initializeApp(FirebaseOptions options, [String? name]);
+external AppJsImpl initializeApp(FirebaseOptions options, [String name]);
 
 @JS()
-external AppJsImpl app([String? name]);
+external AppJsImpl app([String name]);
 
 /// FirebaseError is a subclass of the standard Error object.
 /// In addition to a message string, it contains a string-valued code.
@@ -48,14 +50,14 @@ abstract class FirebaseError {
 @anonymous
 class FirebaseOptions {
   external factory FirebaseOptions({
-    String? apiKey,
-    String? authDomain,
-    String? databaseURL,
-    String? projectId,
-    String? storageBucket,
-    String? messagingSenderId,
-    String? measurementId,
-    String? appId,
+    String apiKey,
+    String authDomain,
+    String databaseURL,
+    String projectId,
+    String storageBucket,
+    String messagingSenderId,
+    String measurementId,
+    String appId,
   });
 
   external String get apiKey;

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
@@ -18,11 +20,15 @@ class FirebasePerformanceWeb extends FirebasePerformancePlatform {
         super(appInstance: null);
 
   /// Instance of Performance from the web plugin.
-  performance_interop.Performance? _webPerformance;
+  performance_interop.Performance _webPerformance;
 
   /// Lazily initialize [_webRemoteConfig] on first method call
   performance_interop.Performance get _delegate {
-    return _webPerformance ??= performance_interop.getPerformanceInstance();
+    if (_webPerformance == null) {
+      _webPerformance == performance_interop.getPerformanceInstance();
+    }
+
+    return _webPerformance;
   }
 
   /// Builds an instance of [FirebasePerformanceWeb]

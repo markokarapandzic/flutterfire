@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -44,7 +46,7 @@ FirebaseOptions _createFromJsOptions(firebase.FirebaseOptions options) {
 /// to keep error messages consistent across different platforms.
 String _getJSErrorCode(dynamic e) {
   if (js_util.getProperty(e, 'name') == 'FirebaseError') {
-    return js_util.getProperty(e, 'code') ?? '';
+    return js_util.getProperty(e, 'code') == null ? '' : js_util.getProperty(e, 'code');
   }
 
   return '';
@@ -59,7 +61,7 @@ FirebaseException _catchJSError(dynamic e) {
   if (js_util.getProperty(e, 'name') == 'FirebaseError') {
     String rawCode = js_util.getProperty(e, 'code');
     String code = rawCode;
-    String message = js_util.getProperty(e, 'message') ?? '';
+    String message = js_util.getProperty(e, 'message') == null ? '' : js_util.getProperty(e, 'message');
 
     if (code.contains('/')) {
       List<String> chunks = code.split('/');

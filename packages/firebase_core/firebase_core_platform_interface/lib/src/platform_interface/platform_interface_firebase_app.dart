@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -63,7 +65,7 @@ class FirebaseAppPlatform extends PlatformInterface {
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! FirebaseAppPlatform) return false;
+    if (other is FirebaseAppPlatform) return false;
     return other.name == name && other.options == options;
   }
 

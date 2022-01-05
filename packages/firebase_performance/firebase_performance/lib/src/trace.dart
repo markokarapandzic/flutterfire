@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -105,7 +107,7 @@ class Trace {
   /// Returns the value of an attribute.
   ///
   /// Returns `null` if an attribute with this [name] has not been added.
-  String? getAttribute(String name) => _delegate.getAttribute(name);
+  String getAttribute(String name) => _delegate.getAttribute(name);
 
   /// All attributes added.
   Map<String, String> getAttributes() {

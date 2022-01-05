@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 import 'dart:async';
 
@@ -25,25 +27,29 @@ abstract class FirebaseRemoteConfigPlatform extends PlatformInterface {
   /// Create instance using [app] using the existing implementation.
   factory FirebaseRemoteConfigPlatform.instanceFor({
     required FirebaseApp app,
-    Map<dynamic, dynamic>? pluginConstants,
+    Map<dynamic, dynamic> pluginConstants,
   }) {
     return FirebaseRemoteConfigPlatform.instance
         .delegateFor(app: app)
         .setInitialValues(
-          remoteConfigValues: pluginConstants ?? <dynamic, dynamic>{},
+          remoteConfigValues: pluginConstants == null ? <dynamic, dynamic>{} : pluginConstants,
         );
   }
 
   static final Object _token = Object();
 
-  static FirebaseRemoteConfigPlatform? _instance;
+  static FirebaseRemoteConfigPlatform _instance;
 
   /// The current default [FirebaseRemoteConfigPlatform] instance.
   ///
   /// It will always default to [MethodChannelFirebaseRemoteConfig]
   /// if no other implementation was provided.
   static FirebaseRemoteConfigPlatform get instance {
-    return _instance ??= MethodChannelFirebaseRemoteConfig.instance;
+    if (_instance == null) {
+      _instance = MethodChannelFirebaseRemoteConfig.instance;
+    }
+
+    return _instance;
   }
 
   /// Sets the [FirebaseRemoteConfigPlatform] instance.
@@ -54,10 +60,10 @@ abstract class FirebaseRemoteConfigPlatform extends PlatformInterface {
 
   /// The [FirebaseApp] this instance was initialized with.
   @protected
-  final FirebaseApp? appInstance;
+  final FirebaseApp appInstance;
 
   /// Returns the [FirebaseApp] for the current instance.
-  late final FirebaseApp app = appInstance ?? Firebase.app();
+  late final FirebaseApp app = appInstance = null ? Firebase.app() : appInstance;
 
   /// Enables delegates to create new instances of themselves if a none
   /// default [FirebaseApp] instance is required by the user.

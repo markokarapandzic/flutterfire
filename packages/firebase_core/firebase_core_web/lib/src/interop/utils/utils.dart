@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -19,8 +21,8 @@ import 'js_interop.dart' as js;
 /// The optional [customDartify] function may return `null` to indicate,
 /// that it could not handle the given JS Object.
 dynamic dartify(
-  Object? jsObject, [
-  Object? Function(Object? object)? customDartify,
+  Object jsObject, [
+  Object Function(Object object) customDartify,
 ]) {
   if (_isBasicType(jsObject)) {
     return jsObject;
@@ -31,12 +33,12 @@ dynamic dartify(
     return jsObject.map((item) => dartify(item, customDartify)).toList();
   }
 
-  var jsDate = js.dartifyDate(jsObject!);
+  var jsDate = js.dartifyDate(jsObject);
   if (jsDate != null) {
     return jsDate;
   }
 
-  Object? value = customDartify?.call(jsObject);
+  Object value = customDartify.call(jsObject);
 
   if (value == null) {
     var keys = js.objectKeys(jsObject);
@@ -53,7 +55,7 @@ dynamic dartify(
 // Converts an Iterable into a JS Array
 dynamic jsifyList(
   Iterable list, [
-  Object? Function(Object? object)? customJsify,
+  Object Function(Object object) customJsify,
 ]) {
   return js.toJSArray(list.map((item) => jsify(item, customJsify)).toList());
 }
@@ -63,8 +65,8 @@ dynamic jsifyList(
 /// The optional [customJsify] function may return `null` to indicate,
 /// that it could not handle the given Dart Object.
 dynamic jsify(
-  Object? dartObject, [
-  Object? Function(Object? object)? customJsify,
+  Object dartObject, [
+  Object Function(Object object) customJsify,
 ]) {
   if (_isBasicType(dartObject)) {
     return dartObject;
@@ -86,7 +88,7 @@ dynamic jsify(
     return allowInterop(dartObject);
   }
 
-  Object? value = customJsify?.call(dartObject);
+  Object value = customJsify.call(dartObject);
 
   if (value == null) {
     throw ArgumentError.value(dartObject, 'dartObject', 'Could not convert');
@@ -101,7 +103,7 @@ dynamic callMethod(Object jsObject, String method, List<dynamic> args) =>
 
 /// Returns `true` if the [value] is a very basic built-in type - e.g.
 /// `null`, [num], [bool] or [String]. It returns `false` in the other case.
-bool _isBasicType(Object? value) {
+bool _isBasicType(Object value) {
   if (value == null || value is num || value is bool || value is String) {
     return true;
   }
