@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -41,11 +43,11 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
   @override
   Future<void> logEvent({
     required String name,
-    Map<String, Object?>? parameters,
-    AnalyticsCallOptions? callOptions,
+    Map<String, Object> parameters,
+    AnalyticsCallOptions callOptions,
   }) {
     try {
-      return channel.invokeMethod<void>('Analytics#logEvent', <String, Object?>{
+      return channel.invokeMethod<void>('Analytics#logEvent', <String, Object>{
         'eventName': name,
         'parameters': parameters,
       });
@@ -56,13 +58,13 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
 
   @override
   Future<void> setConsent({
-    bool? adStorageConsentGranted,
-    bool? analyticsStorageConsentGranted,
+    bool adStorageConsentGranted,
+    bool analyticsStorageConsentGranted,
   }) async {
     try {
       return channel.invokeMethod<void>(
         'Analytics#setConsent',
-        <String, Object?>{
+        <String, Object>{
           if (adStorageConsentGranted != null)
             'adStorageConsentGranted': adStorageConsentGranted,
           if (analyticsStorageConsentGranted != null)
@@ -93,7 +95,7 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
     try {
       return channel.invokeMethod<void>(
         'Analytics#setAnalyticsCollectionEnabled',
-        <String, bool?>{
+        <String, bool>{
           'enabled': enabled,
         },
       );
@@ -104,13 +106,13 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
 
   @override
   Future<void> setUserId({
-    String? id,
-    AnalyticsCallOptions? callOptions,
+    String id,
+    AnalyticsCallOptions callOptions,
   }) {
     try {
       return channel.invokeMethod<void>(
         'Analytics#setUserId',
-        <String, String?>{'userId': id},
+        <String, String>{'userId': id},
       );
     } catch (e, s) {
       throw convertPlatformException(e, s);
@@ -119,14 +121,14 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
 
   @override
   Future<void> setCurrentScreen({
-    String? screenName,
-    String? screenClassOverride,
-    AnalyticsCallOptions? callOptions,
+    String screenName,
+    String screenClassOverride,
+    AnalyticsCallOptions callOptions,
   }) {
     try {
-      return channel.invokeMethod<void>('Analytics#logEvent', <String, Object?>{
+      return channel.invokeMethod<void>('Analytics#logEvent', <String, Object>{
         'eventName': 'screen_view',
-        'parameters': <String, String?>{
+        'parameters': <String, String>{
           'screen_name': screenName,
           'screen_class': screenClassOverride,
         },
@@ -139,12 +141,12 @@ class MethodChannelFirebaseAnalytics extends FirebaseAnalyticsPlatform {
   @override
   Future<void> setUserProperty({
     required String name,
-    required String? value,
-    AnalyticsCallOptions? callOptions,
+    required String value,
+    AnalyticsCallOptions callOptions,
   }) {
     try {
       return channel
-          .invokeMethod<void>('Analytics#setUserProperty', <String, Object?>{
+          .invokeMethod<void>('Analytics#setUserProperty', <String, Object>{
         'name': name,
         'value': value,
       });

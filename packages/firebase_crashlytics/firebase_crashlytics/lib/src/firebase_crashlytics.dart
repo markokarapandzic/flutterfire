@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -13,16 +15,20 @@ class FirebaseCrashlytics extends FirebasePluginPlatform {
       : super(app.name, 'plugins.flutter.io/firebase_crashlytics');
 
   /// Cached instance of [FirebaseCrashlytics];
-  static FirebaseCrashlytics? _instance;
+  static FirebaseCrashlytics _instance;
 
   // Cached and lazily loaded instance of [FirebaseCrashlyticsPlatform] to avoid
   // creating a [MethodChannelFirebaseCrashlytics] when not needed or creating an
   // instance with the default app before a user specifies an app.
-  FirebaseCrashlyticsPlatform? _delegatePackingProperty;
+  FirebaseCrashlyticsPlatform _delegatePackingProperty;
 
   FirebaseCrashlyticsPlatform get _delegate {
-    return _delegatePackingProperty ??= FirebaseCrashlyticsPlatform.instanceFor(
+    if (_delegatePackingProperty == null) {
+      _delegatePackingProperty = FirebaseCrashlyticsPlatform.instanceFor(
         app: app, pluginConstants: pluginConstants);
+    }
+
+    return _delegatePackingProperty;
   }
 
   /// The [FirebaseApp] for this current [FirebaseCrashlytics] instance.
@@ -30,9 +36,11 @@ class FirebaseCrashlytics extends FirebasePluginPlatform {
 
   /// Returns an instance using the default [FirebaseApp].
   static FirebaseCrashlytics get instance {
-    _instance ??= FirebaseCrashlytics._(app: Firebase.app());
+    if (_instance == null) {
+      _instance = FirebaseCrashlytics._(app: Firebase.app());
+    }
 
-    return _instance!;
+    return _instance;
   }
 
   /// Whether the current Crashlytics instance is collecting reports. If false,
@@ -76,13 +84,15 @@ class FirebaseCrashlytics extends FirebasePluginPlatform {
   }
 
   /// Submits a Crashlytics report of a caught error.
-  Future<void> recordError(dynamic exception, StackTrace? stack,
+  Future<void> recordError(dynamic exception, StackTrace stack,
       {dynamic reason,
       Iterable<DiagnosticsNode> information = const [],
-      bool? printDetails,
+      bool printDetails,
       bool fatal = false}) async {
     // Use the debug flag if printDetails is not provided
-    printDetails ??= kDebugMode;
+    if (printDetails == null) {
+      printDetails = kDebugMode;
+    }
 
     final String _information = information.isEmpty
         ? ''
@@ -114,7 +124,7 @@ class FirebaseCrashlytics extends FirebasePluginPlatform {
       print('----------------------------------------------------');
     }
 
-    final StackTrace stackTrace = stack ?? StackTrace.current;
+    final StackTrace stackTrace = stack == null ? StackTrace.current : stack;
 
     // Report error.
     final List<Map<String, String>> stackTraceElements =
@@ -139,7 +149,7 @@ class FirebaseCrashlytics extends FirebasePluginPlatform {
       reason: flutterErrorDetails.context,
       information: flutterErrorDetails.informationCollector == null
           ? []
-          : flutterErrorDetails.informationCollector!(),
+          : flutterErrorDetails.informationCollector(),
       printDetails: false,
     );
   }

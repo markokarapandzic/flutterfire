@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -24,11 +26,11 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
     'plugins.flutter.io/firebase_crashlytics',
   );
 
-  bool? _isCrashlyticsCollectionEnabled;
+  bool _isCrashlyticsCollectionEnabled;
 
   @override
   bool get isCrashlyticsCollectionEnabled {
-    return _isCrashlyticsCollectionEnabled!;
+    return _isCrashlyticsCollectionEnabled;
   }
 
   @override
@@ -47,11 +49,11 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
     }
 
     try {
-      Map<String, dynamic>? data =
+      Map<String, dynamic> data =
           await channel.invokeMapMethod<String, dynamic>(
               'Crashlytics#checkForUnsentReports');
 
-      return data!['unsentReports'];
+      return data['unsentReports'];
     } on PlatformException catch (e, s) {
       throw platformExceptionToFirebaseException(e, s);
     }
@@ -78,11 +80,11 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
   @override
   Future<bool> didCrashOnPreviousExecution() async {
     try {
-      Map<String, dynamic>? data =
+      Map<String, dynamic> data =
           await channel.invokeMapMethod<String, dynamic>(
               'Crashlytics#didCrashOnPreviousExecution');
 
-      return data!['didCrashOnPreviousExecution'];
+      return data['didCrashOnPreviousExecution'];
     } on PlatformException catch (e, s) {
       throw platformExceptionToFirebaseException(e, s);
     }
@@ -94,7 +96,7 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
     required String information,
     required String reason,
     bool fatal = false,
-    List<Map<String, String>>? stackTraceElements,
+    List<Map<String, String>> stackTraceElements,
   }) async {
     try {
       await channel
@@ -103,7 +105,7 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
         'information': information,
         'reason': reason,
         'fatal': fatal,
-        'stackTraceElements': stackTraceElements ?? [],
+        'stackTraceElements': stackTraceElements == null ? [] : stackTraceElements,
       });
     } on PlatformException catch (e, s) {
       throw platformExceptionToFirebaseException(e, s);
@@ -133,13 +135,13 @@ class MethodChannelFirebaseCrashlytics extends FirebaseCrashlyticsPlatform {
   @override
   Future<void> setCrashlyticsCollectionEnabled(bool enabled) async {
     try {
-      Map<String, dynamic>? data = await channel
+      Map<String, dynamic> data = await channel
           .invokeMapMethod<String, dynamic>(
               'Crashlytics#setCrashlyticsCollectionEnabled', <String, dynamic>{
         'enabled': enabled,
       });
 
-      _isCrashlyticsCollectionEnabled = data!['isCrashlyticsCollectionEnabled'];
+      _isCrashlyticsCollectionEnabled = data['isCrashlyticsCollectionEnabled'];
     } on PlatformException catch (e, s) {
       throw platformExceptionToFirebaseException(e, s);
     }

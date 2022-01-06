@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -48,14 +50,18 @@ abstract class FirebaseCrashlyticsPlatform extends PlatformInterface {
     return appInstance;
   }
 
-  static FirebaseCrashlyticsPlatform? _instance;
+  static FirebaseCrashlyticsPlatform _instance;
 
   /// The current default [FirebaseCrashlyticsPlatform] instance.
   ///
   /// It will always default to [MethodChannelFirebaseCrashlytics]
   /// if no other implementation was provided.
   static FirebaseCrashlyticsPlatform get instance {
-    return _instance ??= MethodChannelFirebaseCrashlytics(app: Firebase.app());
+    if (_instance == null) {
+      _instance = MethodChannelFirebaseCrashlytics(app: Firebase.app());
+    }
+
+    return _instance;
   }
 
   /// Sets the [FirebaseCrashlyticsPlatform.instance]
@@ -112,7 +118,7 @@ abstract class FirebaseCrashlyticsPlatform extends PlatformInterface {
     required String information,
     required String reason,
     bool fatal = false,
-    List<Map<String, String>>? stackTraceElements,
+    List<Map<String, String>> stackTraceElements,
   }) {
     throw UnimplementedError('recordError() is not implemented');
   }
