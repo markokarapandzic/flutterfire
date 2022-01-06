@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2019 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -17,11 +19,14 @@ class FirebaseInAppMessaging extends FirebasePluginPlatform {
   // Cached and lazily loaded instance of [FirebaseInAppMessagingPlatform] to avoid
   // creating a [MethodChannelFirebaseInAppMessaging] when not needed or creating an
   // instance with the default app before a user specifies an app.
-  FirebaseInAppMessagingPlatform? _delegatePackingProperty;
+  FirebaseInAppMessagingPlatform _delegatePackingProperty;
 
   FirebaseInAppMessagingPlatform get _delegate {
-    return _delegatePackingProperty ??=
-        FirebaseInAppMessagingPlatform.instanceFor(app: app);
+    if (_delegatePackingProperty == null) {
+      _delegatePackingProperty = FirebaseInAppMessagingPlatform.instanceFor(app: app);
+    }
+
+    return _delegatePackingProperty;
   }
 
   static final Map<String, FirebaseInAppMessaging> _cachedInstances = {};
@@ -36,7 +41,7 @@ class FirebaseInAppMessaging extends FirebasePluginPlatform {
   /// Returns an instance using a specified [FirebaseApp].
   static FirebaseInAppMessaging _instanceFor({required FirebaseApp app}) {
     if (_cachedInstances.containsKey(app.name)) {
-      return _cachedInstances[app.name]!;
+      return _cachedInstances[app.name];
     }
 
     FirebaseInAppMessaging newInstance = FirebaseInAppMessaging._(app: app);

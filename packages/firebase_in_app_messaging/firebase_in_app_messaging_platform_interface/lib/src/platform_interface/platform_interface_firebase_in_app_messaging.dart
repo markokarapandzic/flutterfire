@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -14,10 +16,10 @@ abstract class FirebaseInAppMessagingPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FirebaseInAppMessagingPlatform? _instance;
+  static FirebaseInAppMessagingPlatform _instance;
 
   /// The [FirebaseApp] this instance was initialized with
-  final FirebaseApp? app;
+  final FirebaseApp app;
 
   /// Create an instance using [app] using the existing implementation
   factory FirebaseInAppMessagingPlatform.instanceFor({
@@ -31,7 +33,11 @@ abstract class FirebaseInAppMessagingPlatform extends PlatformInterface {
   /// It will always default to [MethodChannelFirebaseInAppMessaging]
   /// if no other implementation was provided.
   static FirebaseInAppMessagingPlatform get instance {
-    return _instance ??= MethodChannelFirebaseInAppMessaging.instance;
+    if (_instance == null) {
+      _instance = MethodChannelFirebaseInAppMessaging.instance;
+    }
+
+    return _instance;
   }
 
   /// Sets the [FirebaseInAppMessagingPlatform.instance]
@@ -43,7 +49,7 @@ abstract class FirebaseInAppMessagingPlatform extends PlatformInterface {
   /// Enables delegates to create new instances of themselves if a none default
   /// [FirebaseApp] instance or region is required by the user.
   @protected
-  FirebaseInAppMessagingPlatform delegateFor({FirebaseApp? app}) {
+  FirebaseInAppMessagingPlatform delegateFor({FirebaseApp app}) {
     throw UnimplementedError('delegateFor() is not implemented');
   }
 

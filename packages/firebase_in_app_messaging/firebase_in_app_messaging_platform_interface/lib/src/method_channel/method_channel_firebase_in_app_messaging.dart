@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -10,7 +12,7 @@ import 'utils/exception.dart';
 
 class MethodChannelFirebaseInAppMessaging
     extends FirebaseInAppMessagingPlatform {
-  MethodChannelFirebaseInAppMessaging({FirebaseApp? app}) : super(app);
+  MethodChannelFirebaseInAppMessaging({FirebaseApp app}) : super(app);
 
   /// Internal stub class initializer.
   ///
@@ -30,7 +32,7 @@ class MethodChannelFirebaseInAppMessaging
   }
 
   @override
-  FirebaseInAppMessagingPlatform delegateFor({FirebaseApp? app}) {
+  FirebaseInAppMessagingPlatform delegateFor({FirebaseApp app}) {
     return MethodChannelFirebaseInAppMessaging(app: app);
   }
 
@@ -39,7 +41,7 @@ class MethodChannelFirebaseInAppMessaging
     try {
       await channel
           .invokeMethod('FirebaseInAppMessaging#triggerEvent', <String, String>{
-        'appName': app!.name,
+        'appName': app.name,
         'eventName': eventName,
       });
     } catch (e, s) {
@@ -52,7 +54,7 @@ class MethodChannelFirebaseInAppMessaging
     try {
       await channel.invokeMethod(
           'FirebaseInAppMessaging#setMessagesSuppressed', <String, dynamic>{
-        'appName': app!.name,
+        'appName': app.name,
         'suppress': suppress,
       });
     } catch (e, s) {
@@ -66,7 +68,7 @@ class MethodChannelFirebaseInAppMessaging
       await channel.invokeMethod(
           'FirebaseInAppMessaging#setAutomaticDataCollectionEnabled',
           <String, dynamic>{
-            'appName': app!.name,
+            'appName': app.name,
             'enabled': enabled,
           });
     } catch (e, s) {

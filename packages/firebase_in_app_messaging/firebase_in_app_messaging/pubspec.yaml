@@ -8,11 +8,15 @@ false_secrets:
   - example/**
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5"
 
 dependencies:
-  firebase_core: ^1.10.0
+  firebase_core:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core
+      ref: fix/messaging
   firebase_core_platform_interface: ^4.2.3
   firebase_in_app_messaging_platform_interface: ^0.2.0+5
   flutter:
