@@ -5,11 +5,15 @@ repository: https://github.com/FirebaseExtended/flutterfire/tree/master/packages
 version: 1.5.3
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5"
+  sdk: '>=2.7.0 <3.0.0'
+  flutter: '>=1.12.13+hotfix.5'
 
 dependencies:
-  firebase_core_platform_interface: ^4.2.3
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core_platform_interface
+      ref: fix/messaging
   flutter:
     sdk: flutter
   flutter_web_plugins:

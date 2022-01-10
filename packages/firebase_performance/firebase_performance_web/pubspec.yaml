@@ -4,13 +4,17 @@ homepage: https://github.com/FirebaseExtended/flutterfire/tree/master/packages/f
 version: 0.1.0+3
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.20.0"
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: '>=1.20.0'
 
 dependencies:
   firebase: ^9.0.1
   firebase_core: ^1.10.0
-  firebase_core_web: ^1.5.3
+  firebase_core_web:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core_web
+      ref: fix/messaging
   firebase_performance_platform_interface: ^0.1.0+3
   flutter:
     sdk: flutter
@@ -33,4 +37,3 @@ flutter:
       web:
         pluginClass: FirebasePerformanceWeb
         fileName: firebase_performance_web.dart
-
