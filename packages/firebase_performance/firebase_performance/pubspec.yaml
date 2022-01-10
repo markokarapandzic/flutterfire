@@ -20,7 +20,11 @@ dependencies:
       url: https://github.com/markokarapandzic/flutterfire.git
       path: packages/firebase_core/firebase_core
       ref: fix/messaging
-  firebase_core_platform_interface: ^4.2.3
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core_platform_interface
+      ref: fix/messaging
   firebase_performance_platform_interface: ^0.1.0+3
   firebase_performance_web: ^0.1.0+3
   flutter:
