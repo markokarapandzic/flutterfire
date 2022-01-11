@@ -6,8 +6,8 @@ repository: https://github.com/FirebaseExtended/flutterfire/tree/master/packages
 version: 2.6.5
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4"
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: '>=1.12.13+hotfix.4'
 
 dependencies:
   cloud_firestore_platform_interface: ^5.4.10
@@ -18,7 +18,7 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  js: ^0.6.3
+  js: 0.6.2
 
 dev_dependencies:
   firebase_core_platform_interface: ^4.2.3
