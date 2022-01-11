@@ -25,8 +25,16 @@ dependencies:
       url: https://github.com/markokarapandzic/flutterfire.git
       path: packages/firebase_core/firebase_core_platform_interface
       ref: fix/messaging
-  firebase_performance_platform_interface: ^0.1.0+3
-  firebase_performance_web: ^0.1.0+3
+  firebase_performance_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_performance/firebase_performance_platform_interface
+      ref: fix/messaging
+  firebase_performance_web:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_performance/firebase_performance_web
+      ref: fix/messaging
   flutter:
     sdk: flutter
 

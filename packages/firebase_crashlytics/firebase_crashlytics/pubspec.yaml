@@ -24,7 +24,11 @@ dependencies:
       url: https://github.com/markokarapandzic/flutterfire.git
       path: packages/firebase_core/firebase_core_platform_interface
       ref: fix/messaging
-  firebase_crashlytics_platform_interface: ^3.1.11
+  firebase_crashlytics_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_crashlytics/firebase_crashlytics_platform_interface
+      ref: fix/messaging
   flutter:
     sdk: flutter
   stack_trace: 1.9.6

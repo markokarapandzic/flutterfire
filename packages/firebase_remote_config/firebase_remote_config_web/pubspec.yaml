@@ -10,13 +10,21 @@ environment:
   flutter: '>=1.20.0'
 
 dependencies:
-  firebase_core: ^1.10.0
+  firebase_core:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core
+      ref: fix/messaging
   firebase_core_web:
     git:
       url: https://github.com/markokarapandzic/flutterfire.git
       path: packages/firebase_core/firebase_core_web
       ref: fix/messaging
-  firebase_remote_config_platform_interface: ^1.0.3
+  firebase_remote_config_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_remote_config/firebase_remote_config_platform_interface
+      ref: fix/messaging
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -24,7 +32,11 @@ dependencies:
   js: ^0.6.3
 
 dev_dependencies:
-  firebase_core_platform_interface: ^4.2.3
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core_platform_interface
+      ref: fix/messaging
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0

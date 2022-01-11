@@ -5,17 +5,25 @@ repository: https://github.com/FirebaseExtended/flutterfire/tree/master/packages
 version: 2.2.5
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.7.0 <3.0.0'
   flutter: '>=1.12.13+hotfix.4'
 
 dependencies:
-  firebase_core: ^1.10.0
+  firebase_core:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core
+      ref: fix/messaging
   firebase_core_web:
     git:
       url: https://github.com/markokarapandzic/flutterfire.git
       path: packages/firebase_core/firebase_core_web
       ref: fix/messaging
-  firebase_messaging_platform_interface: ^3.1.4
+  firebase_messaging_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_messaging/firebase_messaging_platform_interface
+      ref: fix/messaging
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -24,7 +32,11 @@ dependencies:
   meta: 1.3.0-nullsafety.3
 
 dev_dependencies:
-  firebase_core_platform_interface: ^4.2.3
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/markokarapandzic/flutterfire.git
+      path: packages/firebase_core/firebase_core_platform_interface
+      ref: fix/messaging
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
